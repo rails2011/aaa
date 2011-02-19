@@ -1,0 +1,23 @@
+<h1>My Music Library</h1>
+
+<%= link_to 'Add new song', {:controller => :songs} %><p>
+
+<%= form_for @search, :url => '/mymusics/index', :html => {:method => :get} do |f| %>
+  <%= f.label 'ค้นหา' %>
+  <%= f.text_field :title_or_artist_contains %>
+  <%= f.submit :value => 'ตกลง'%>
+<% end %>
+<p>
+<table>
+  <% @songs.each do |song| %>
+  <tr class="<%= cycle('line_odd','line_even') %>">
+    <td><img src='<%= song.img_url %>' width='120' /> </td>
+    <td>
+      <dd><%= song.title %></dd>
+      <dd><%= song.artist %></dd>
+      <dd><a href='<%= song.youtube_url%>' target='_blank'><input type='button' value='Play' /></a></dd>
+    </td>
+  </tr>
+<% end %>
+<%= will_paginate @songs %>
+</table>
